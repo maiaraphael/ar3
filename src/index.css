@@ -1,0 +1,92 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   AR3 Construtora – Global Styles
+   Tailwind base + customizações globais + utilitários de animação
+   ────────────────────────────────────────────────────────────────────────── */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Reset e configurações base ────────────────────────────────────────── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-brand-offwhite text-brand-dark font-sans;
+    cursor: none; /* Cursor padrão escondido – substituído pelo CustomCursor */
+    overflow-x: hidden;
+  }
+
+  /* Restaura cursor padrão em touch devices */
+  @media (hover: none) {
+    body { cursor: auto; }
+    a, button { cursor: auto; }
+  }
+
+  a, button {
+    cursor: none;
+  }
+
+  /* Scrollbar customizada (Webkit) */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-brand-navy;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-brand-orange rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-brand-amber;
+  }
+}
+
+/* ── Utilitários e componentes custom ──────────────────────────────────── */
+@layer utilities {
+  /* Texto com gradiente laranja→azul */
+  .text-gradient-brand {
+    background: linear-gradient(135deg, #F26522 0%, #1D6FA4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Corte diagonal de seção */
+  .clip-diagonal {
+    clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+  }
+
+  /* Overflow GSAP reveal */
+  .overflow-clip {
+    overflow: clip;
+  }
+}
+
+/* ── Animação de progress bar no topo da página ──────────────────────── */
+#progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #F26522, #1D6FA4);
+  z-index: 9999;
+  transition: width 0.1s linear;
+  pointer-events: none;
+}
+
+/* ── Seleção de texto com cor da marca ──────────────────────────────── */
+::selection {
+  background-color: #F26522;
+  color: #ffffff;
+}
