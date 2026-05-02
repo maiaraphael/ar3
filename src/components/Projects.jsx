@@ -68,6 +68,23 @@ export default function Projects() {
   const trackRef     = useRef(null)  // trilho horizontal que se move
   const progressRef  = useRef(null)  // barra de progresso
 
+  // IntersectionObserver: muda cor do body quando Projects entra/sai da tela
+  useEffect(() => {
+    const el = containerRef.current
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          gsap.to(document.body, { backgroundColor: '#080F1C', duration: 0.7, ease: 'power2.inOut' })
+        } else {
+          gsap.to(document.body, { backgroundColor: '#F7F6F2', duration: 0.7, ease: 'power2.inOut' })
+        }
+      },
+      { threshold: 0.15 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
   useEffect(() => {
     // Calcula quanto precisa mover
     const getDistance = () =>
@@ -82,18 +99,6 @@ export default function Projects() {
 
     setContainerHeight()
     window.addEventListener('resize', setContainerHeight)
-
-    // Muda cor do body — usa os mesmos pontos do pin para sincronia perfeita
-    ScrollTrigger.create({
-      trigger: containerRef.current,
-      start: 'top top',
-      end: () => `+=${getDistance()}`,
-      invalidateOnRefresh: true,
-      onEnter:     () => gsap.to(document.body, { backgroundColor: '#080F1C', duration: 0.7, ease: 'power2.inOut' }),
-      onLeave:     () => gsap.to(document.body, { backgroundColor: '#F7F6F2', duration: 0.7, ease: 'power2.inOut' }),
-      onEnterBack: () => gsap.to(document.body, { backgroundColor: '#080F1C', duration: 0.7, ease: 'power2.inOut' }),
-      onLeaveBack: () => gsap.to(document.body, { backgroundColor: '#F7F6F2', duration: 0.7, ease: 'power2.inOut' }),
-    })
 
     // ScrollTrigger que move o trilho horizontalmente
     const st = ScrollTrigger.create({
