@@ -69,17 +69,6 @@ export default function Projects() {
   const progressRef  = useRef(null)  // barra de progresso
 
   useEffect(() => {
-    // Muda cor do body
-    ScrollTrigger.create({
-      trigger: containerRef.current,
-      start: 'top 60%',
-      end: 'bottom 40%',
-      onEnter:     () => gsap.to(document.body, { backgroundColor: '#080F1C', duration: 0.9 }),
-      onLeave:     () => gsap.to(document.body, { backgroundColor: '#F7F6F2', duration: 0.9 }),
-      onEnterBack: () => gsap.to(document.body, { backgroundColor: '#080F1C', duration: 0.9 }),
-      onLeaveBack: () => gsap.to(document.body, { backgroundColor: '#F7F6F2', duration: 0.9 }),
-    })
-
     // Calcula quanto precisa mover
     const getDistance = () =>
       trackRef.current.scrollWidth - stickyRef.current.offsetWidth
@@ -93,6 +82,18 @@ export default function Projects() {
 
     setContainerHeight()
     window.addEventListener('resize', setContainerHeight)
+
+    // Muda cor do body — usa os mesmos pontos do pin para sincronia perfeita
+    ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: 'top top',
+      end: () => `+=${getDistance()}`,
+      invalidateOnRefresh: true,
+      onEnter:     () => gsap.to(document.body, { backgroundColor: '#080F1C', duration: 0.7, ease: 'power2.inOut' }),
+      onLeave:     () => gsap.to(document.body, { backgroundColor: '#F7F6F2', duration: 0.7, ease: 'power2.inOut' }),
+      onEnterBack: () => gsap.to(document.body, { backgroundColor: '#080F1C', duration: 0.7, ease: 'power2.inOut' }),
+      onLeaveBack: () => gsap.to(document.body, { backgroundColor: '#F7F6F2', duration: 0.7, ease: 'power2.inOut' }),
+    })
 
     // ScrollTrigger que move o trilho horizontalmente
     const st = ScrollTrigger.create({
