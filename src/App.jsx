@@ -37,11 +37,11 @@ export default function App() {
         {/* 02 – Sobre a empresa */}
         <About />
 
-        {/* Faixa laranja animada */}
-        <Marquee />
-
         {/* 03 – Portfólio de projetos */}
         <Projects />
+
+        {/* Faixa laranja animada */}
+        <Marquee />
 
         {/* 04 – Serviços oferecidos */}
         <Services />
