@@ -12,7 +12,6 @@
 
   html {
     scroll-behavior: smooth;
-    scroll-snap-type: y proximity;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -22,7 +21,6 @@
     @apply text-brand-dark font-sans;
     background-color: #F7F6F2;
     overflow-x: hidden;
-    transition: background-color 0.1s;
   }
 
   /* ── Grain texture sobre toda a página ─────────────────────────────── */
@@ -110,11 +108,4 @@
   color: #ffffff;
 }
 
-/* ── Scroll snap nas sections ───────────────────────────────────────── */
-#hero,
-#sobre,
-#servicos,
-#diferenciais,
-#contato {
-  scroll-snap-align: start;
-}
+
