@@ -1,18 +1,31 @@
-import Navbar       from './components/Navbar'
-import Hero         from './components/Hero'
-import About        from './components/About'
-import Projects     from './components/Projects'
-import Services     from './components/Services'
-import Stats        from './components/Stats'
+import { useState, useCallback } from 'react'
+import Navbar        from './components/Navbar'
+import Hero          from './components/Hero'
+import About         from './components/About'
+import Projects      from './components/Projects'
+import Services      from './components/Services'
+import Stats         from './components/Stats'
 import Differentials from './components/Differentials'
-import Testimonials from './components/Testimonials'
-import Contact      from './components/Contact'
-import Footer       from './components/Footer'
-import CustomCursor from './components/CustomCursor'
+import Testimonials  from './components/Testimonials'
+import Contact       from './components/Contact'
+import Footer        from './components/Footer'
+import CustomCursor  from './components/CustomCursor'
+import Preloader     from './components/Preloader'
 
 export default function App() {
+  // Controla se o preloader ainda está montado no DOM
+  const [loading, setLoading] = useState(true)
+
+  // Chamado pelo Preloader quando a animação de saída termina
+  const handlePreloaderComplete = useCallback(() => {
+    setLoading(false)
+  }, [])
+
   return (
     <>
+      {/* ── Preloader: casa sendo construída 0→100% ────────────────── */}
+      {loading && <Preloader onComplete={handlePreloaderComplete} />}
+
       {/* Cursor personalizado AR3 (desativa-se em touch automaticamente) */}
       <CustomCursor />
 
