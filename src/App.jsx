@@ -3,6 +3,7 @@ import Navbar        from './components/Navbar'
 import Hero          from './components/Hero'
 import About         from './components/About'
 import Projects      from './components/Projects'
+import Marquee       from './components/Marquee'
 import Services      from './components/Services'
 import Stats         from './components/Stats'
 import Differentials from './components/Differentials'
@@ -35,6 +36,9 @@ export default function App() {
 
         {/* 02 – Sobre a empresa */}
         <About />
+
+        {/* Faixa laranja animada */}
+        <Marquee />
 
         {/* 03 – Portfólio de projetos */}
         <Projects />
