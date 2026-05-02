@@ -9,7 +9,6 @@ import Differentials from './components/Differentials'
 import Testimonials  from './components/Testimonials'
 import Contact       from './components/Contact'
 import Footer        from './components/Footer'
-import CustomCursor  from './components/CustomCursor'
 import Preloader     from './components/Preloader'
 
 export default function App() {
@@ -26,10 +25,7 @@ export default function App() {
       {/* ── Preloader: casa sendo construída 0→100% ────────────────── */}
       {loading && <Preloader onComplete={handlePreloaderComplete} />}
 
-      {/* Cursor personalizado AR3 (desativa-se em touch automaticamente) */}
-      <CustomCursor />
-
-      {/* Barra de navegação fixa */}
+      {/* Barra de navegação fixa */
       <Navbar />
 
       {/* ── Seções da página ────────────────────────────────────────── */}

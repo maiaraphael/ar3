@@ -25,21 +25,12 @@
     @apply text-brand-dark font-sans;
     /* background-color definido inline para o GSAP conseguir animar a transição */
     background-color: #F5F5F0;
-    cursor: none; /* Cursor padrão escondido – substituído pelo CustomCursor */
     overflow-x: hidden;
     /* Transição suave de fundo para complementar o GSAP */
     transition: background-color 0.1s;
   }
 
-  /* Restaura cursor padrão em touch devices */
-  @media (hover: none) {
-    body { cursor: auto; }
-    a, button { cursor: auto; }
-  }
 
-  a, button {
-    cursor: none;
-  }
 
   /* Scrollbar customizada (Webkit) */
   ::-webkit-scrollbar {
