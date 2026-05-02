@@ -52,10 +52,8 @@ export default function Navbar() {
   return (
     <header
       ref={navRef}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
-        scrolled
-          ? 'bg-brand-navy/96 backdrop-blur-xl border-b border-white/[0.06] py-3 shadow-2xl shadow-black/30'
-          : 'bg-gradient-to-b from-brand-navy/70 to-transparent backdrop-blur-none py-7'
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-brand-navy/95 backdrop-blur-xl border-b border-white/[0.06] ${
+        scrolled ? 'py-3 shadow-2xl shadow-black/30' : 'py-6'
       }`}
     >
       <div className="max-w-7xl mx-auto px-8 flex items-center justify-between">
