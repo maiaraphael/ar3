@@ -98,7 +98,7 @@ export default function Projects() {
   const cardsRef      = useRef([])
   const [hovered, setHovered] = useState(null)
 
-  // ── Animações de entrada com GSAP ScrollTrigger ────────────────────────
+  // ── Animações de entrada + transição de fundo da página ────────────────
   useEffect(() => {
     const ctx = gsap.context(() => {
 
@@ -125,15 +125,33 @@ export default function Projects() {
         })
       })
 
+      // ── Transição de cor de fundo da página ao entrar/sair da seção ────
+      // Ao entrar: body fica azul-escuro (brand-navy).
+      // Ao sair para baixo ou voltar para cima: body volta ao offwhite.
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: 'top 60%',   // começa quando o topo da seção atinge 60% da viewport
+        end:   'bottom 40%', // termina quando o rodapé da seção passa de 40% da viewport
+        onEnter:     () => gsap.to(document.body, { backgroundColor: '#0A1628', duration: 0.85, ease: 'power2.inOut', overwrite: 'auto' }),
+        onLeave:     () => gsap.to(document.body, { backgroundColor: '#F5F5F0', duration: 0.85, ease: 'power2.inOut', overwrite: 'auto' }),
+        onEnterBack: () => gsap.to(document.body, { backgroundColor: '#0A1628', duration: 0.85, ease: 'power2.inOut', overwrite: 'auto' }),
+        onLeaveBack: () => gsap.to(document.body, { backgroundColor: '#F5F5F0', duration: 0.85, ease: 'power2.inOut', overwrite: 'auto' }),
+      })
+
     }, sectionRef)
-    return () => ctx.revert()
+    return () => {
+      // Garante que o body volta ao offwhite ao desmontar
+      gsap.set(document.body, { backgroundColor: '#F5F5F0' })
+      ctx.revert()
+    }
   }, [])
 
   return (
     <section
       id="projetos"
       ref={sectionRef}
-      className="relative py-32 bg-brand-navy overflow-hidden"
+      // Sem bg próprio — a cor de fundo é controlada pelo GSAP no body
+      className="relative py-32 overflow-hidden"
     >
       {/* Número decorativo */}
       <div className="absolute top-10 right-8 text-[10rem] font-display font-black
