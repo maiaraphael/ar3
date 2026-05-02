@@ -1,128 +1,80 @@
-import { useEffect, useRef } from 'react'
+﻿import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowDown, Play } from 'lucide-react'
+import { ArrowDown } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
-// ─── Palavras que fazem o "typewriter" rotativo no headline ─────────────────
-const ROTATING_WORDS = ['Residências', 'Edifícios', 'Patrimônios', 'Legados']
+const ROTATING_WORDS = ['Residencias', 'Edificios', 'Patrimonios', 'Legados']
 
 export default function Hero() {
-  const sectionRef   = useRef(null)
-  const bgRef        = useRef(null)
-  const taglineRef   = useRef(null)
-  const headline1Ref = useRef(null)
-  const headline2Ref = useRef(null)
-  const wordRef      = useRef(null)
-  const subRef       = useRef(null)
-  const ctaRef       = useRef(null)
-  const scrollRef    = useRef(null)
-  const particlesRef = useRef([])
-  const wordIndexRef = useRef(0)
+  const sectionRef  = useRef(null)
+  const bgRef       = useRef(null)
+  const tagRef      = useRef(null)
+  const line1Ref    = useRef(null)
+  const line2Ref    = useRef(null)
+  const wordRef     = useRef(null)
+  const subRef      = useRef(null)
+  const ctaRef      = useRef(null)
+  const scrollRef   = useRef(null)
+  const lineHRef    = useRef(null)
+  const yearRef     = useRef(null)
+  const numRef      = useRef(null)
 
-  // ── Animação de entrada principal ──────────────────────────────────────
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'expo.out' } })
-
-      // Overlay de abertura (curtain reveal)
-      tl.from(bgRef.current, {
-        scaleY: 0, transformOrigin: 'top', duration: 0, // começa escondido
-      })
-      .to(bgRef.current, { opacity: 1, duration: 0.01 })
-
-      // Tag de localização
-      .from(taglineRef.current, {
-        y: 30, opacity: 0, duration: 0.8, delay: 0.3,
-      })
-
-      // Linha 1 do headline – letras sobem
-      .from(headline1Ref.current.querySelectorAll('.word'), {
-        y: 110, opacity: 0, stagger: 0.12, duration: 1.1, ease: 'expo.out',
-      }, '-=0.4')
-
-      // Linha 2 (palavra rotativa) – entra junto
-      .from(headline2Ref.current, {
-        y: 50, opacity: 0, duration: 0.9,
-      }, '-=0.7')
-
-      // Subtítulo
-      .from(subRef.current, {
-        y: 20, opacity: 0, duration: 0.8,
-      }, '-=0.5')
-
-      // CTAs
-      .from(ctaRef.current.children, {
-        y: 20, opacity: 0, stagger: 0.15, duration: 0.7,
-      }, '-=0.4')
-
-      // Indicador de scroll
-      .from(scrollRef.current, {
-        y: 20, opacity: 0, duration: 0.6,
-      }, '-=0.2')
+      gsap.set(bgRef.current, { opacity: 1 })
+      const tl = gsap.timeline({ defaults: { ease: 'expo.out' }, delay: 0.1 })
+      tl
+        .from(lineHRef.current, { scaleX: 0, transformOrigin: 'left', duration: 1.4 })
+        .from(tagRef.current, { y: 16, opacity: 0, duration: 0.8 }, '-=0.9')
+        .from(line1Ref.current.querySelectorAll('.wd'), {
+          y: 100, opacity: 0, stagger: 0.1, duration: 1.2,
+        }, '-=0.6')
+        .from(line2Ref.current, { y: 60, opacity: 0, duration: 1.1 }, '-=0.9')
+        .from(subRef.current, { y: 20, opacity: 0, duration: 0.9 }, '-=0.7')
+        .from(ctaRef.current.children, { y: 18, opacity: 0, stagger: 0.12, duration: 0.8 }, '-=0.5')
+        .from(yearRef.current, { opacity: 0, duration: 0.8 }, '-=0.4')
+        .from(scrollRef.current, { y: 16, opacity: 0, duration: 0.7 }, '-=0.3')
+        .from(numRef.current, { opacity: 0, duration: 1.2 }, '-=0.8')
     }, sectionRef)
-
     return () => ctx.revert()
   }, [])
 
-  // ── Efeito parallax no fundo ao rolar ─────────────────────────────────
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.to(bgRef.current, {
-        yPercent: 30,
-        ease: 'none',
+        yPercent: 25, ease: 'none',
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 1.5,
+          start: 'top top', end: 'bottom top', scrub: 1.8,
         },
       })
     }, sectionRef)
     return () => ctx.revert()
   }, [])
 
-  // ── Rotação de palavras no headline ───────────────────────────────────
   useEffect(() => {
-    let index = 0
-    const interval = setInterval(() => {
+    let idx = 0
+    const timer = setInterval(() => {
       if (!wordRef.current) return
-      index = (index + 1) % ROTATING_WORDS.length
+      idx = (idx + 1) % ROTATING_WORDS.length
       gsap.to(wordRef.current, {
-        y: -20, opacity: 0, duration: 0.35, ease: 'power2.in',
+        y: -24, opacity: 0, duration: 0.32, ease: 'power2.in',
         onComplete: () => {
-          wordRef.current.textContent = ROTATING_WORDS[index]
+          wordRef.current.textContent = ROTATING_WORDS[idx]
           gsap.fromTo(wordRef.current,
-            { y: 30, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.45, ease: 'expo.out' }
+            { y: 32, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.48, ease: 'expo.out' }
           )
         },
       })
-    }, 2800)
-    return () => clearInterval(interval)
+    }, 2600)
+    return () => clearInterval(timer)
   }, [])
 
-  // ── Partículas flutuantes animadas ────────────────────────────────────
-  useEffect(() => {
-    particlesRef.current.forEach((p, i) => {
-      if (!p) return
-      gsap.to(p, {
-        y: `random(-40, 40)`,
-        x: `random(-30, 30)`,
-        rotation: `random(-15, 15)`,
-        duration: `random(4, 8)`,
-        ease: 'sine.inOut',
-        repeat: -1,
-        yoyo: true,
-        delay: i * 0.3,
-      })
-    })
-  }, [])
-
-  const scrollDown = () => {
+  const scrollDown = () =>
     document.querySelector('#sobre')?.scrollIntoView({ behavior: 'smooth' })
-  }
 
   return (
     <section
@@ -130,199 +82,139 @@ export default function Hero() {
       ref={sectionRef}
       className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-brand-navy"
     >
-      {/* ──────────────────────────────────────────────────────────────────
-          FUNDO – IMAGEM/VÍDEO DO HERO
-          ➤ SUBSTITUA o gradiente abaixo por uma imagem ou vídeo real:
-             • Para imagem: adicione src/assets/hero-bg.jpg e use
-               style={{ backgroundImage: "url('/src/assets/hero-bg.jpg')" }}
-               com className "bg-cover bg-center"
-             • Para vídeo: descomente a tag <video> abaixo e ajuste o src.
-      ─────────────────────────────────────────────────────────────────── */}
-      <div
-        ref={bgRef}
-        className="absolute inset-0 opacity-0"
-        style={{
-          background: `
-            linear-gradient(135deg,
-              #0A1628 0%,
-              #1B3B6F 40%,
-              #0D2145 70%,
-              #0A1628 100%
-            )
-          `,
-        }}
-      >
+      {/* FUNDO - substitua o gradiente por imagem/video real */}
+      <div ref={bgRef} className="absolute inset-0"
+           style={{ background: 'linear-gradient(160deg, #080F1C 0%, #0E2140 45%, #080F1C 100%)' }}>
         {/*
-          ── VIDEO BACKGROUND (descomente quando tiver o vídeo) ──────────
-          <video
-            autoPlay muted loop playsInline
-            className="absolute inset-0 w-full h-full object-cover opacity-30"
-          >
+          VIDEO BACKGROUND - descomente para usar video:
+          <video autoPlay muted loop playsInline
+                 className="absolute inset-0 w-full h-full object-cover opacity-25">
             <source src="/videos/hero-obra.mp4" type="video/mp4" />
-            {/* ↑ Insira aqui o vídeo aéreo/timelapse da obra * /}
           </video>
         */}
-
-        {/* Overlay gradiente sobre imagem/vídeo para legibilidade */}
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/60 via-brand-navy/20 to-brand-navy/80" />
-
-        {/* Textura sutil de construção */}
-        <div
-          className="absolute inset-0 opacity-5"
-          style={{
-            backgroundImage: `repeating-linear-gradient(
-              0deg, transparent, transparent 60px,
-              rgba(255,255,255,0.03) 60px, rgba(255,255,255,0.03) 61px
-            ),
-            repeating-linear-gradient(
-              90deg, transparent, transparent 60px,
-              rgba(255,255,255,0.03) 60px, rgba(255,255,255,0.03) 61px
-            )`,
-          }}
-        />
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/40 via-transparent to-brand-navy/80" />
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/60 via-transparent to-transparent" />
+        {/* Grade arquitetonica sutil */}
+        <div className="absolute inset-0 opacity-[0.035]"
+             style={{
+               backgroundImage: 'linear-gradient(rgba(201,168,76,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.6) 1px, transparent 1px)',
+               backgroundSize: '80px 80px',
+             }} />
       </div>
 
-      {/* ── Partículas decorativas flutuantes ──────────────────────────── */}
-      {[...Array(6)].map((_, i) => (
-        <div
-          key={i}
-          ref={(el) => (particlesRef.current[i] = el)}
-          className="absolute rounded-full pointer-events-none"
-          style={{
-            width:  `${[80, 50, 120, 40, 90, 60][i]}px`,
-            height: `${[80, 50, 120, 40, 90, 60][i]}px`,
-            top:    `${[15, 70, 30, 80, 20, 60][i]}%`,
-            left:   `${[10, 80, 60, 20, 85, 45][i]}%`,
-            background: i % 2 === 0
-              ? 'radial-gradient(circle, rgba(242,101,34,0.12) 0%, transparent 70%)'
-              : 'radial-gradient(circle, rgba(29,111,164,0.15) 0%, transparent 70%)',
-          }}
-        />
-      ))}
+      {/* Numero grande de fundo */}
+      <div ref={numRef}
+           className="absolute right-0 top-1/2 -translate-y-1/2 font-display font-black select-none pointer-events-none leading-none text-white/[0.025] translate-x-8"
+           style={{ fontSize: 'clamp(16rem, 30vw, 28rem)' }}>
+        AR3
+      </div>
 
-      {/* ── Linha decorativa laranja – esquerda ────────────────────────── */}
-      <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-brand-orange to-transparent opacity-60" />
+      {/* Linha horizontal dourada */}
+      <div ref={lineHRef}
+           className="absolute top-[28%] left-0 right-0 h-px bg-gradient-to-r from-brand-gold/0 via-brand-gold/20 to-brand-gold/0 pointer-events-none" />
 
-      {/* ── Conteúdo principal ─────────────────────────────────────────── */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-20">
+      {/* Sidebar vertical - Est. 2009 */}
+      <div ref={yearRef}
+           className="absolute right-8 top-1/2 -translate-y-1/2 lg:flex flex-col items-center gap-6 hidden pointer-events-none">
+        <span className="text-[9px] text-white/25 uppercase tracking-[0.35em] font-sans [writing-mode:vertical-lr] rotate-180">
+          Est. 2009 - Uberaba - MG
+        </span>
+        <div className="w-px h-16 bg-gradient-to-b from-brand-gold/30 to-transparent" />
+      </div>
 
-        {/* Tag de localização */}
-        <div ref={taglineRef} className="flex items-center gap-3 mb-8">
-          <span className="inline-block w-8 h-px bg-brand-orange" />
-          <span className="text-xs font-sans font-medium text-brand-orange uppercase tracking-[0.3em]">
-            Uberaba — Minas Gerais
+      {/* Conteudo principal */}
+      <div className="relative z-10 max-w-7xl mx-auto px-8 pt-40 pb-28">
+
+        {/* Tag de localizacao */}
+        <div ref={tagRef} className="flex items-center gap-4 mb-10">
+          <div className="w-8 h-px bg-brand-gold" />
+          <span className="text-[10px] font-sans font-medium text-brand-gold/80 uppercase tracking-[0.35em]">
+            Uberaba - Minas Gerais
+          </span>
+          <div className="w-1.5 h-1.5 bg-brand-orange rounded-full" />
+          <span className="text-[10px] font-sans font-light text-white/30 uppercase tracking-[0.25em]">
+            Construcao de Alto Padrao
           </span>
         </div>
 
-        {/* Headline principal */}
-        <div className="overflow-hidden mb-4">
-          <h1
-            ref={headline1Ref}
-            className="font-display font-black leading-none text-white"
-            style={{ fontSize: 'clamp(3rem, 8vw, 7.5rem)' }}
-          >
-            {'Nós Construímos'.split(' ').map((w, i) => (
-              <span key={i} className="word inline-block mr-[0.25em] overflow-hidden">
-                {w}
-              </span>
-            ))}
-          </h1>
+        {/* Headline linha 1 */}
+        <div ref={line1Ref}
+             className="overflow-hidden mb-3 flex flex-wrap"
+             style={{ lineHeight: 1 }}>
+          {['Nos', 'Construimos'].map((w, i) => (
+            <span key={i}
+                  className="wd inline-block mr-[0.22em] font-display font-black text-white"
+                  style={{ fontSize: 'clamp(3.5rem, 9.5vw, 9rem)' }}>
+              {w}
+            </span>
+          ))}
         </div>
 
-        {/* Linha 2 com palavra rotativa */}
-        <div ref={headline2Ref} className="flex flex-wrap items-baseline gap-x-4 mb-10">
-          <span
-            className="font-display font-black italic text-brand-orange leading-none"
-            style={{ fontSize: 'clamp(3rem, 8vw, 7.5rem)' }}
-          >
+        {/* Headline linha 2 - italic + palavra rotativa */}
+        <div ref={line2Ref}
+             className="flex flex-wrap items-baseline gap-x-5 mb-12"
+             style={{ lineHeight: 1 }}>
+          <span className="font-display font-black italic text-gradient-gold"
+                style={{ fontSize: 'clamp(3.5rem, 9.5vw, 9rem)' }}>
             Grandes
           </span>
-          <span
-            ref={wordRef}
-            className="font-display font-black leading-none text-white/90 transition-all"
-            style={{ fontSize: 'clamp(3rem, 8vw, 7.5rem)' }}
-          >
+          <span ref={wordRef}
+                className="font-display font-black text-white/85"
+                style={{ fontSize: 'clamp(3.5rem, 9.5vw, 9rem)' }}>
             {ROTATING_WORDS[0]}
           </span>
         </div>
 
-        {/* Subtítulo */}
-        <p
-          ref={subRef}
-          className="max-w-xl text-base md:text-lg text-white/60 leading-relaxed font-sans font-light mb-12"
-        >
-          Dedicação, experiência e uma paixão pela perfeição. Mais de 15 anos transformando
-          sonhos em estruturas sólidas e duradouras no Triângulo Mineiro.
+        {/* Linha separadora */}
+        <div className="w-20 h-px bg-gradient-to-r from-brand-gold to-transparent mb-10" />
+
+        {/* Subtitulo */}
+        <p ref={subRef}
+           className="max-w-lg text-[15px] text-white/50 leading-[1.85] font-sans font-light tracking-wide mb-14">
+          Dedicacao, experiencia e uma paixao inabalavel pela perfeicao.
+          Mais de 15 anos transformando projetos em obras que resistem ao tempo
+          no Triangulo Mineiro e alem.
         </p>
 
         {/* CTAs */}
-        <div ref={ctaRef} className="flex flex-wrap gap-4 items-center">
-          <a
-            href="#projetos"
-            onClick={(e) => { e.preventDefault(); document.querySelector('#projetos')?.scrollIntoView({ behavior: 'smooth' }) }}
-            className="group inline-flex items-center gap-3 px-8 py-4 bg-brand-orange text-white
-                       font-semibold uppercase tracking-widest text-sm rounded-sm
-                       hover:bg-brand-amber shadow-xl shadow-brand-orange/40
-                       transition-all duration-300 hover:shadow-brand-orange/60 hover:scale-[1.03]"
-          >
+        <div ref={ctaRef} className="flex flex-wrap gap-5 items-center">
+          <a href="#projetos"
+             onClick={(e) => { e.preventDefault(); document.querySelector('#projetos')?.scrollIntoView({ behavior: 'smooth' }) }}
+             className="relative overflow-hidden btn-shimmer group inline-flex items-center gap-3 px-9 py-4 bg-brand-orange text-white text-[11px] font-semibold uppercase tracking-[0.22em] hover:bg-brand-amber shadow-xl shadow-brand-orange/25 transition-all duration-400 hover:shadow-brand-orange/50 hover:-translate-y-0.5">
             Ver Projetos
-            <ArrowDown size={16} className="group-hover:translate-y-1 transition-transform duration-300" />
+            <ArrowDown size={14} className="group-hover:translate-y-1 transition-transform duration-300" />
           </a>
 
-          {/*
-            ── BOTÃO "VER SHOWREEL" ─────────────────────────────────────
-            Ao adicionar o vídeo showreel da empresa, este botão abrirá
-            um modal/lightbox. Por enquanto leva para a seção de projetos.
-          */}
-          <button
-            className="group inline-flex items-center gap-3 px-8 py-4 border border-white/30
-                       text-white font-medium text-sm rounded-sm hover:border-brand-orange
-                       hover:text-brand-orange transition-all duration-300"
-          >
-            <span className="flex items-center justify-center w-8 h-8 rounded-full border border-current
-                             group-hover:bg-brand-orange group-hover:border-brand-orange transition-all duration-300">
-              <Play size={12} fill="currentColor" />
-            </span>
-            Ver Showreel {/* ↑ Botão para vídeo institucional da AR3 */}
-          </button>
+          <a href="#sobre"
+             onClick={(e) => { e.preventDefault(); document.querySelector('#sobre')?.scrollIntoView({ behavior: 'smooth' }) }}
+             className="group inline-flex items-center gap-3 text-[11px] font-sans font-medium text-white/50 uppercase tracking-[0.2em] hover:text-white transition-colors duration-300">
+            Conheca a AR3
+            <span className="inline-block w-8 h-px bg-current group-hover:w-14 transition-all duration-500" />
+          </a>
         </div>
 
-        {/* Badges de credibilidade */}
-        <div className="mt-16 flex flex-wrap items-center gap-8">
+        {/* Mini-badges */}
+        <div className="mt-20 pt-8 border-t border-white/[0.07] flex flex-wrap gap-10">
           {[
-            { value: '15+', label: 'Anos de Experiência' },
-            { value: '200+', label: 'Obras Entregues'     },
-            { value: '100%', label: 'Satisfação Garantida' },
-          ].map((stat) => (
-            <div key={stat.label} className="flex items-center gap-3">
-              <span className="text-2xl font-display font-black text-brand-orange">{stat.value}</span>
-              <span className="text-xs text-white/50 uppercase tracking-wider leading-tight max-w-[80px]">
-                {stat.label}
-              </span>
+            { v: '15+',  l: 'Anos'              },
+            { v: '200+', l: 'Obras entregues'   },
+            { v: '98%',  l: 'Satisfacao'         },
+          ].map(({ v, l }) => (
+            <div key={l} className="flex items-baseline gap-2">
+              <span className="font-display font-black text-white text-2xl">{v}</span>
+              <span className="text-[10px] text-white/30 uppercase tracking-[0.2em]">{l}</span>
             </div>
           ))}
         </div>
       </div>
 
-      {/* ── Indicador de scroll ────────────────────────────────────────── */}
-      <div
-        ref={scrollRef}
-        onClick={scrollDown}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center
-                   gap-2 cursor-pointer group z-10"
-      >
-        <span className="text-[10px] text-white/40 uppercase tracking-[0.3em]">Scroll</span>
-        <div className="w-px h-14 bg-gradient-to-b from-white/40 to-transparent
-                        group-hover:from-brand-orange transition-colors duration-300" />
-      </div>
-
-      {/* ── Número da seção decorativo ─────────────────────────────────── */}
-      <div
-        className="absolute bottom-10 right-8 text-[8rem] font-display font-black
-                   leading-none select-none pointer-events-none
-                   text-white/[0.03]"
-      >
-        01
+      {/* Scroll indicator */}
+      <div ref={scrollRef} onClick={scrollDown}
+           className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer z-10">
+        <span className="text-[9px] text-white/25 uppercase tracking-[0.35em] font-sans">Scroll</span>
+        <div className="relative w-px h-14 bg-white/10 overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1/2 bg-brand-gold animate-[scroll-line_1.8s_ease-in-out_infinite]" />
+        </div>
       </div>
     </section>
   )

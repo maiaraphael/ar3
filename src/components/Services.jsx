@@ -1,208 +1,166 @@
-import { useEffect, useRef, useState } from 'react'
+﻿import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Home, Building2, Wrench, Palette, Layers, ArrowRight } from 'lucide-react'
+import { Home, Building2, Wrench, Palette, Layers, Plus, Minus } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
-// ─── Serviços oferecidos ────────────────────────────────────────────────────
 const SERVICES = [
   {
-    icon: Home,
+    num: '01',
+    Icon: Home,
     title: 'Construção Residencial',
-    description:
-      'Casas e mansões de alto padrão com arquitetura contemporânea, acabamentos premium e total personalização conforme o desejo do cliente.',
-    items: ['Projetos exclusivos', 'Acabamentos importados', 'Smart home integrado'],
-    accent: 'bg-brand-orange',
+    description: 'Casas e mansões de alto padrão com arquitetura contemporânea, acabamentos premium e total personalização. Cada detalhe planejado para superar expectativas.',
+    items: ['Projetos exclusivos', 'Acabamentos importados', 'Smart home integrado', 'Gerenciamento completo de obra'],
   },
   {
-    icon: Building2,
+    num: '02',
+    Icon: Building2,
     title: 'Obras Comerciais',
-    description:
-      'Edifícios corporativos, shoppings, clínicas e galpões logísticos com engenharia de ponta e entrega dentro do prazo e orçamento.',
-    items: ['Estruturas metálicas', 'Fachadas em vidro', 'Automação predial'],
-    accent: 'bg-brand-sky',
+    description: 'Edifícios corporativos, shoppings, clínicas e galpões logísticos com engenharia de ponta, entrega no prazo e controle rigoroso de custos.',
+    items: ['Estruturas metálicas e concreto', 'Fachadas em vidro e ACM', 'Automação predial', 'Certificações LEED e ABNT'],
   },
   {
-    icon: Wrench,
+    num: '03',
+    Icon: Wrench,
     title: 'Reformas e Renovações',
-    description:
-      'Transformação completa de ambientes residenciais e comerciais, respeitando a estrutura existente e modernizando cada detalhe.',
-    items: ['Projetos de reforma', 'Ampliações', 'Retrofit de fachadas'],
-    accent: 'bg-brand-orange',
+    description: 'Transformação completa de espaços residenciais e comerciais. Respeitamos a estrutura existente enquanto modernizamos cada detalhe com expertise.',
+    items: ['Diagnóstico estrutural', 'Projetos de interiores', 'Retrofit elétrico e hidráulico', 'Prazo e orçamento garantidos'],
   },
   {
-    icon: Palette,
-    title: 'Design & Interiores',
-    description:
-      'Acompanhamento de design de interiores parceiro para ambientes que refletem a identidade do cliente com sofisticação e funcionalidade.',
-    items: ['Marcenaria sob medida', 'Iluminação cenográfica', 'Revestimentos exclusivos'],
-    accent: 'bg-brand-sky',
+    num: '04',
+    Icon: Palette,
+    title: 'Design de Interiores',
+    description: 'Projetos de interiores exclusivos que harmonizam estética e funcionalidade, criando ambientes únicos que refletem a personalidade de cada cliente.',
+    items: ['Conceituação e moodboard', 'Mobiliário sob medida', 'Iluminação técnica e cenográfica', 'Acompanhamento de execução'],
   },
   {
-    icon: Layers,
+    num: '05',
+    Icon: Layers,
     title: 'Incorporação Imobiliária',
-    description:
-      'Desenvolvimento de empreendimentos residenciais e mistos — do terreno à entrega das chaves — com valorização garantida.',
-    items: ['Lançamentos', 'Condomínios fechados', 'Loteamentos premium'],
-    accent: 'bg-brand-orange',
+    description: 'Desenvolvimento completo de empreendimentos imobiliários — da aquisição do terreno ao habite-se — com inteligência de mercado e rigor construtivo.',
+    items: ['Estudos de viabilidade', 'Aprovação de projetos', 'Gestão de vendas', 'Pós-obra e garantia'],
   },
-]
-
-// ─── Marquee de palavras decorativas no ticker ─────────────────────────────
-const TICKER_WORDS = [
-  'Excelência', '·', 'Qualidade', '·', 'Inovação', '·',
-  'Precisão', '·', 'Compromisso', '·', 'Alto Padrão', '·',
-  'Excelência', '·', 'Qualidade', '·', 'Inovação', '·',
-  'Precisão', '·', 'Compromisso', '·', 'Alto Padrão', '·',
 ]
 
 export default function Services() {
   const sectionRef  = useRef(null)
-  const labelRef    = useRef(null)
-  const titleRef    = useRef(null)
-  const cardsRef    = useRef([])
-  const [active, setActive] = useState(0)
+  const headerRef   = useRef(null)
+  const itemsRef    = useRef([])
+  const [open, setOpen] = useState(0)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(labelRef.current, {
-        x: -40, opacity: 0, duration: 0.8, ease: 'expo.out',
-        scrollTrigger: { trigger: labelRef.current, start: 'top 85%' },
+      gsap.from(headerRef.current, {
+        y: 40, opacity: 0, duration: 1.1, ease: 'expo.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' },
       })
-      gsap.from(titleRef.current.children, {
-        y: 60, opacity: 0, stagger: 0.12, duration: 1, ease: 'expo.out',
-        scrollTrigger: { trigger: titleRef.current, start: 'top 85%' },
-      })
-      cardsRef.current.forEach((card, i) => {
-        if (!card) return
-        gsap.from(card, {
-          y: 60, opacity: 0, duration: 0.9, ease: 'expo.out',
-          delay: i * 0.1,
-          scrollTrigger: { trigger: card, start: 'top 90%' },
-        })
+      gsap.from(itemsRef.current, {
+        y: 30, opacity: 0, stagger: 0.1, duration: 0.9, ease: 'expo.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 75%' },
       })
     }, sectionRef)
     return () => ctx.revert()
   }, [])
 
   return (
-    <section
-      id="servicos"
-      ref={sectionRef}
-      className="relative bg-brand-offwhite overflow-hidden"
-    >
-      {/* ── Ticker / Marquee decorativo ─────────────────────────────── */}
-      <div className="bg-brand-orange py-4 overflow-hidden">
-        <div className="flex animate-marquee whitespace-nowrap">
-          {TICKER_WORDS.map((word, i) => (
-            <span
-              key={i}
-              className="mx-6 text-white text-sm font-semibold uppercase tracking-widest"
-            >
-              {word}
-            </span>
-          ))}
-        </div>
-      </div>
+    <section id="servicos" ref={sectionRef}
+             className="relative py-32 bg-brand-offwhite overflow-hidden">
 
-      <div className="py-32 max-w-7xl mx-auto px-6">
-        {/* Número decorativo */}
-        <div className="absolute right-8 text-[10rem] font-display font-black
-                        leading-none select-none pointer-events-none text-brand-navy/[0.04]">
-          04
-        </div>
+      {/* Acento vertical laranja */}
+      <div className="absolute left-0 top-0 bottom-0 w-px
+                      bg-gradient-to-b from-transparent via-brand-orange/40 to-transparent" />
 
-        {/* ── Cabeçalho ───────────────────────────────────────────── */}
-        <div className="mb-16">
-          <div ref={labelRef} className="flex items-center gap-3 mb-6">
-            <span className="inline-block w-8 h-px bg-brand-orange" />
-            <span className="text-xs font-sans font-semibold text-brand-orange uppercase tracking-[0.3em]">
-              O Que Fazemos
-            </span>
-          </div>
+      <div className="max-w-7xl mx-auto px-8">
 
-          <div ref={titleRef} className="overflow-hidden">
-            <h2 className="font-display font-black text-brand-navy leading-tight"
-                style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.8rem)' }}>
-              <span className="block">Excelência em cada</span>
-              <span className="block italic text-brand-sky">detalhe da obra.</span>
+        {/* Header */}
+        <div ref={headerRef} className="grid lg:grid-cols-2 gap-8 items-end mb-20">
+          <div>
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-8 h-px bg-brand-orange" />
+              <span className="text-[10px] font-sans font-medium text-brand-orange uppercase tracking-[0.35em]">
+                O que fazemos
+              </span>
+            </div>
+            <h2 className="font-display font-black text-brand-navy leading-none"
+                style={{ fontSize: 'clamp(2.8rem, 5vw, 4.5rem)' }}>
+              Serviços
+              <br />
+              <span className="italic text-gradient-brand">Especializados</span>
             </h2>
           </div>
+          <p className="text-brand-navy/50 text-[15px] leading-[1.9] font-sans font-light lg:mb-1">
+            Da concepção ao acabamento final, cada obra AR3 é tratada com o cuidado
+            e a precisão que seu projeto merece. Excelência em cada etapa.
+          </p>
         </div>
 
-        {/* ── Cards de serviços ────────────────────────────────────── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {SERVICES.map((service, i) => {
-            const Icon = service.icon
+        {/* Accordion de serviços */}
+        <div className="border-t border-brand-navy/10">
+          {SERVICES.map((svc, i) => {
+            const isOpen = open === i
             return (
-              <div
-                key={service.title}
-                ref={(el) => (cardsRef.current[i] = el)}
-                onMouseEnter={() => setActive(i)}
-                onMouseLeave={() => setActive(null)}
-                className={`group relative p-8 rounded-sm transition-all duration-500 cursor-default
-                             overflow-hidden
-                             ${active === i
-                               ? 'bg-brand-navy text-white shadow-2xl shadow-brand-navy/30 -translate-y-2'
-                               : 'bg-white text-brand-dark hover:shadow-xl'
-                             }`}
-              >
-                {/* Acento colorido no topo */}
-                <div className={`absolute top-0 left-0 right-0 h-1 ${service.accent}
-                                  transition-opacity duration-300 ${active === i ? 'opacity-100' : 'opacity-40'}`} />
+              <div key={svc.num}
+                   ref={(el) => (itemsRef.current[i] = el)}
+                   className="border-b border-brand-navy/10">
+                <button
+                  onClick={() => setOpen(isOpen ? null : i)}
+                  className="w-full flex items-center gap-6 py-7 text-left group
+                             hover:bg-brand-navy/[0.02] transition-colors duration-300 px-2">
+                  {/* Número */}
+                  <span className={`font-mono text-xs font-medium tracking-[0.15em] transition-colors duration-300 w-8 shrink-0 ${isOpen ? 'text-brand-orange' : 'text-brand-navy/25'}`}>
+                    {svc.num}
+                  </span>
+                  {/* Ícone */}
+                  <span className={`w-8 h-8 shrink-0 flex items-center justify-center border transition-all duration-300 ${isOpen ? 'border-brand-orange bg-brand-orange text-white' : 'border-brand-navy/20 text-brand-navy/40 group-hover:border-brand-orange/50 group-hover:text-brand-orange'}`}>
+                    <svc.Icon size={15} />
+                  </span>
+                  {/* Título */}
+                  <span className={`flex-1 font-display font-black transition-colors duration-300 ${isOpen ? 'text-brand-orange' : 'text-brand-navy group-hover:text-brand-orange'}`}
+                        style={{ fontSize: 'clamp(1.1rem, 2vw, 1.5rem)' }}>
+                    {svc.title}
+                  </span>
+                  {/* Toggle */}
+                  <span className={`shrink-0 w-7 h-7 flex items-center justify-center border transition-all duration-300 ${isOpen ? 'border-brand-orange bg-brand-orange text-white' : 'border-brand-navy/20 text-brand-navy/40'}`}>
+                    {isOpen ? <Minus size={12} /> : <Plus size={12} />}
+                  </span>
+                </button>
 
-                {/* Número decorativo de fundo */}
-                <div className={`absolute bottom-4 right-4 text-7xl font-display font-black
-                                  select-none pointer-events-none leading-none
-                                  transition-colors duration-300
-                                  ${active === i ? 'text-white/[0.05]' : 'text-brand-navy/[0.05]'}`}>
-                  {String(i + 1).padStart(2, '0')}
-                </div>
-
-                {/* Ícone */}
-                <div className={`inline-flex items-center justify-center w-12 h-12 rounded-sm mb-6
-                                  transition-all duration-300
-                                  ${active === i
-                                    ? 'bg-brand-orange text-white'
-                                    : 'bg-brand-offwhite text-brand-orange'
-                                  }`}>
-                  <Icon size={22} strokeWidth={1.5} />
-                </div>
-
-                {/* Conteúdo */}
-                <h3 className={`font-display font-bold text-xl mb-3 leading-tight
-                                  transition-colors duration-300
-                                  ${active === i ? 'text-white' : 'text-brand-navy'}`}>
-                  {service.title}
-                </h3>
-
-                <p className={`text-sm leading-relaxed mb-6 transition-colors duration-300
-                                ${active === i ? 'text-white/70' : 'text-brand-dark/60'}`}>
-                  {service.description}
-                </p>
-
-                {/* Lista de itens */}
-                <ul className="space-y-2 mb-6">
-                  {service.items.map((item) => (
-                    <li key={item} className={`flex items-center gap-2 text-xs uppercase tracking-wider
-                                              transition-colors duration-300
-                                              ${active === i ? 'text-white/60' : 'text-brand-dark/50'}`}>
-                      <span className={`w-1 h-1 rounded-full flex-shrink-0 ${service.accent}`} />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-
-                {/* Link */}
-                <div className={`flex items-center gap-2 text-xs font-semibold uppercase tracking-widest
-                                  transition-all duration-300 group-hover:gap-4
-                                  ${active === i ? 'text-brand-orange' : 'text-brand-sky'}`}>
-                  Saiba mais <ArrowRight size={14} />
+                {/* Conteúdo expandido */}
+                <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-80 pb-8' : 'max-h-0'}`}>
+                  <div className="grid lg:grid-cols-2 gap-10 pl-[5.5rem] pr-2">
+                    <p className="text-brand-navy/55 text-[14px] leading-[1.9] font-sans font-light">
+                      {svc.description}
+                    </p>
+                    <ul className="space-y-3">
+                      {svc.items.map((item) => (
+                        <li key={item} className="flex items-center gap-3 text-[13px] text-brand-navy/60 font-sans">
+                          <span className="w-1 h-1 rounded-full bg-brand-gold shrink-0" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
             )
           })}
+        </div>
+
+        {/* CTA */}
+        <div className="mt-16 flex items-center justify-between flex-wrap gap-6">
+          <p className="text-brand-navy/40 text-sm font-sans font-light">
+            Não encontrou o que procura? Fale diretamente com nossa equipe.
+          </p>
+          <a href="#contato"
+             onClick={(e) => { e.preventDefault(); document.querySelector('#contato')?.scrollIntoView({ behavior: 'smooth' }) }}
+             className="group inline-flex items-center gap-3 px-8 py-3.5 border border-brand-navy/20
+                        text-brand-navy text-[11px] font-semibold uppercase tracking-[0.2em]
+                        hover:border-brand-orange hover:text-brand-orange
+                        transition-all duration-300">
+            Solicitar Orçamento
+            <span className="w-6 h-px bg-current group-hover:w-10 transition-all duration-400" />
+          </a>
         </div>
       </div>
     </section>

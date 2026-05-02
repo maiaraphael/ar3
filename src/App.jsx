@@ -25,7 +25,7 @@ export default function App() {
       {/* ── Preloader: casa sendo construída 0→100% ────────────────── */}
       {loading && <Preloader onComplete={handlePreloaderComplete} />}
 
-      {/* Barra de navegação fixa */
+      {/* Barra de navegação fixa */}
       <Navbar />
 
       {/* ── Seções da página ────────────────────────────────────────── */}

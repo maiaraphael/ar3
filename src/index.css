@@ -1,83 +1,106 @@
 /* ──────────────────────────────────────────────────────────────────────────
-   AR3 Construtora – Global Styles
-   Tailwind base + customizações globais + utilitários de animação
+   AR3 Construtora – Global Styles  ·  Premium Edition
    ────────────────────────────────────────────────────────────────────────── */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ── Reset e configurações base ────────────────────────────────────────── */
+/* ── Reset e base ───────────────────────────────────────────────────────── */
 @layer base {
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
+  *, *::before, *::after { box-sizing: border-box; }
 
   html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   body {
     @apply text-brand-dark font-sans;
-    /* background-color definido inline para o GSAP conseguir animar a transição */
-    background-color: #F5F5F0;
+    background-color: #F7F6F2;
     overflow-x: hidden;
-    /* Transição suave de fundo para complementar o GSAP */
     transition: background-color 0.1s;
   }
 
+  /* ── Grain texture sobre toda a página ─────────────────────────────── */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9990;
+    opacity: 0.028;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+  }
 
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: #080F1C; }
+  ::-webkit-scrollbar-thumb { background: #C9A84C; border-radius: 99px; }
 
-  /* Scrollbar customizada (Webkit) */
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    @apply bg-brand-navy;
-  }
-  ::-webkit-scrollbar-thumb {
-    @apply bg-brand-orange rounded-full;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-brand-amber;
-  }
+  /* Seleção de texto */
+  ::selection { background: #E85D1A; color: #fff; }
 }
 
-/* ── Utilitários e componentes custom ──────────────────────────────────── */
+/* ── Utilitários ────────────────────────────────────────────────────────── */
 @layer utilities {
-  /* Texto com gradiente laranja→azul */
-  .text-gradient-brand {
-    background: linear-gradient(135deg, #F26522 0%, #1D6FA4 100%);
+
+  /* Gradiente de texto laranja → dourado */
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #E85D1A 0%, #C9A84C 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  /* Corte diagonal de seção */
-  .clip-diagonal {
-    clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+  /* Gradiente de texto laranja → azul */
+  .text-gradient-brand {
+    background: linear-gradient(135deg, #E85D1A 0%, #1A5F8F 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
-  /* Overflow GSAP reveal */
-  .overflow-clip {
-    overflow: clip;
+  /* Linha dourada animada */
+  .line-gold {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #C9A84C, transparent);
   }
+
+  /* Overflow clip para GSAP reveal */
+  .overflow-clip { overflow: clip; }
+
+  /* Letra tracking editorial */
+  .tracking-editorial { letter-spacing: 0.22em; }
 }
 
-/* ── Animação de progress bar no topo da página ──────────────────────── */
-#progress-bar {
-  position: fixed;
-  top: 0;
+/* ── Animação de brilho no botão principal ─────────────────────────────── */
+@keyframes shimmer-btn {
+  0%   { transform: translateX(-150%) skewX(-20deg); }
+  100% { transform: translateX(250%)  skewX(-20deg); }
+}
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  inset-y: 0;
   left: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #F26522, #1D6FA4);
-  z-index: 9999;
-  transition: width 0.1s linear;
-  pointer-events: none;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+  transform: translateX(-150%) skewX(-20deg);
+}
+.btn-shimmer:hover::after {
+  animation: shimmer-btn 0.7s ease forwards;
+}
+
+/* ── Indicador de scroll (linha que desce) ─────────────────────────────── */
+@keyframes scroll-line {
+  0%   { transform: translateY(-100%); opacity: 1; }
+  50%  { transform: translateY(200%);  opacity: 1; }
+  51%  { opacity: 0; }
+  100% { transform: translateY(-100%); opacity: 0; }
 }
 
 /* ── Seleção de texto com cor da marca ──────────────────────────────── */

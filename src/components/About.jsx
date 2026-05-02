@@ -1,220 +1,161 @@
-import { useEffect, useRef } from 'react'
+﻿import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { CheckCircle } from 'lucide-react'
+import { Award, Users, CheckCircle } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
-// ── Pontos de destaque da empresa ─────────────────────────────────────────
-const HIGHLIGHTS = [
-  'Construções residenciais de alto padrão',
-  'Edifícios corporativos e comerciais',
-  'Acompanhamento transparente da obra',
-  'Equipe própria de engenharia e arquitetura',
-  'Materiais certificados e fornecedores parceiros',
-  'Prazo e orçamento sempre cumpridos',
+const PILLARS = [
+  { Icon: Award,       title: 'Excelência Técnica',  text: 'Engenheiros e mestres de obra certificados, utilizando as melhores práticas e materiais do mercado.' },
+  { Icon: CheckCircle, title: 'Entrega no Prazo',     text: 'Gestão de cronograma rigorosa com tecnologia BIM, garantindo transparência em cada etapa da obra.' },
+  { Icon: Users,       title: 'Time Especializado',   text: 'Equipe própria, treinada e comprometida — do projeto ao acabamento final, sem terceirizações críticas.' },
 ]
 
 export default function About() {
-  const sectionRef  = useRef(null)
-  const labelRef    = useRef(null)
-  const titleRef    = useRef(null)
-  const bodyRef     = useRef(null)
-  const listRef     = useRef(null)
-  const imageRef    = useRef(null)
-  const accentRef   = useRef(null)
+  const sectionRef = useRef(null)
+  const tagRef     = useRef(null)
+  const headRef    = useRef(null)
+  const textRef    = useRef(null)
+  const pillarsRef = useRef([])
+  const imgRef     = useRef(null)
+  const wmarkRef   = useRef(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      const st = { trigger: sectionRef.current, start: 'top 75%' }
 
-      // ── Label da seção ──────────────────────────────────────────────
-      gsap.from(labelRef.current, {
-        x: -40, opacity: 0, duration: 0.8, ease: 'expo.out',
-        scrollTrigger: { trigger: labelRef.current, start: 'top 85%' },
+      gsap.from(wmarkRef.current, {
+        x: 60, opacity: 0, duration: 1.6, ease: 'expo.out',
+        scrollTrigger: st,
       })
-
-      // ── Título ─────────────────────────────────────────────────────
-      gsap.from(titleRef.current.children, {
-        y: 60, opacity: 0, stagger: 0.12, duration: 1, ease: 'expo.out',
-        scrollTrigger: { trigger: titleRef.current, start: 'top 82%' },
+      gsap.from([tagRef.current, headRef.current, textRef.current], {
+        y: 40, opacity: 0, stagger: 0.15, duration: 1.1, ease: 'expo.out',
+        scrollTrigger: st,
       })
-
-      // ── Parágrafo ──────────────────────────────────────────────────
-      gsap.from(bodyRef.current, {
-        y: 30, opacity: 0, duration: 0.9, ease: 'expo.out',
-        scrollTrigger: { trigger: bodyRef.current, start: 'top 85%' },
+      gsap.from(pillarsRef.current, {
+        y: 30, opacity: 0, stagger: 0.12, duration: 0.9, ease: 'expo.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 65%' },
       })
-
-      // ── Lista de destaques ─────────────────────────────────────────
-      gsap.from(listRef.current.children, {
-        x: -30, opacity: 0, stagger: 0.1, duration: 0.7, ease: 'expo.out',
-        scrollTrigger: { trigger: listRef.current, start: 'top 85%' },
+      gsap.from(imgRef.current, {
+        x: 60, opacity: 0, duration: 1.3, ease: 'expo.out',
+        scrollTrigger: st,
       })
-
-      // ── Imagem / bloco visual ──────────────────────────────────────
-      gsap.from(imageRef.current, {
-        x: 80, opacity: 0, duration: 1.2, ease: 'expo.out',
-        scrollTrigger: { trigger: imageRef.current, start: 'top 80%' },
-      })
-
-      // ── Parallax suave na imagem ao rolar ──────────────────────────
-      gsap.to(imageRef.current, {
-        yPercent: -8,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top bottom',
-          end:   'bottom top',
-          scrub: 2,
-        },
-      })
-
-      // ── Acento laranja ─────────────────────────────────────────────
-      gsap.from(accentRef.current, {
-        scaleY: 0, transformOrigin: 'top', duration: 1.2, ease: 'expo.out',
-        scrollTrigger: { trigger: accentRef.current, start: 'top 80%' },
-      })
-
     }, sectionRef)
     return () => ctx.revert()
   }, [])
 
   return (
-    <section
-      id="sobre"
-      ref={sectionRef}
-      className="relative py-32 bg-brand-offwhite overflow-hidden"
-    >
-      {/* Número decorativo de fundo */}
-      <div className="absolute top-10 right-8 text-[10rem] font-display font-black
-                      leading-none select-none pointer-events-none text-brand-navy/[0.04]">
-        02
+    <section id="sobre" ref={sectionRef}
+             className="relative py-32 bg-brand-offwhite overflow-hidden">
+
+      {/* Marca-d'água editorial */}
+      <div ref={wmarkRef}
+           className="absolute right-0 top-1/2 -translate-y-1/2 font-display font-black
+                      text-brand-navy/[0.03] select-none pointer-events-none leading-none"
+           style={{ fontSize: 'clamp(10rem, 20vw, 18rem)' }}>
+        1809
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center">
+      {/* Linha laranja lateral */}
+      <div className="absolute left-0 top-0 bottom-0 w-px
+                      bg-gradient-to-b from-transparent via-brand-orange/30 to-transparent" />
 
-        {/* ── Coluna de texto ─────────────────────────────────────────── */}
-        <div>
-          {/* Label */}
-          <div ref={labelRef} className="flex items-center gap-3 mb-6">
-            <span className="inline-block w-8 h-px bg-brand-orange" />
-            <span className="text-xs font-sans font-semibold text-brand-orange uppercase tracking-[0.3em]">
-              Sobre a AR3
-            </span>
-          </div>
+      <div className="max-w-7xl mx-auto px-8">
+        <div className="grid lg:grid-cols-2 gap-20 items-start">
 
-          {/* Título */}
-          <div ref={titleRef} className="overflow-hidden mb-8">
-            <h2 className="font-display font-black text-brand-navy leading-tight"
-                style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.8rem)' }}>
-              <span className="block">Dedicação, experiência</span>
-              <span className="block italic text-brand-sky">e paixão pela</span>
-              <span className="block">perfeição.</span>
+          {/* ── Coluna esquerda ──────────────────────────────────────── */}
+          <div>
+            {/* Tag */}
+            <div ref={tagRef} className="flex items-center gap-4 mb-8">
+              <div className="w-px h-10 bg-brand-orange" />
+              <span className="text-[10px] font-sans font-medium text-brand-orange uppercase tracking-[0.35em]">
+                Quem somos
+              </span>
+            </div>
+
+            {/* Headline */}
+            <h2 ref={headRef}
+                className="font-display font-black text-brand-navy leading-[0.95] mb-10"
+                style={{ fontSize: 'clamp(2.8rem, 5vw, 4.2rem)' }}>
+              Construindo o
+              <br />
+              <span className="italic text-gradient-brand">Triângulo Mineiro</span>
+              <br />
+              desde 2009
             </h2>
-          </div>
 
-          {/* Corpo */}
-          <div ref={bodyRef} className="space-y-4 text-brand-dark/70 leading-relaxed font-sans mb-10">
-            <p>
-              Na AR3 Construtora, nosso foco é em <strong className="text-brand-navy font-semibold">você</strong> e
-              no que você deseja conquistar. Nos orgulhamos de construir relações sólidas e duradouras,
-              que nos permitem crescer junto com nossos clientes ao longo do tempo.
-            </p>
-            <p>
-              Nossa vontade de trabalhar em parceria com quem compartilha dos mesmos valores é o que faz
-              com que muitos dos nossos clientes possuam um histórico de múltiplos projetos conosco.
-              Superar expectativas resultou em negócios recorrentes em toda a região do Triângulo Mineiro.
-            </p>
-            <p>
-              Acreditamos firmemente: <em className="text-brand-sky">se você consegue sonhar, nós conseguimos construir.</em>
-            </p>
-          </div>
-
-          {/* Lista de destaques */}
-          <ul ref={listRef} className="space-y-3 mb-10">
-            {HIGHLIGHTS.map((item) => (
-              <li key={item} className="flex items-start gap-3 text-sm text-brand-dark/80 font-sans">
-                <CheckCircle size={18} className="text-brand-orange flex-shrink-0 mt-0.5" />
-                {item}
-              </li>
-            ))}
-          </ul>
-
-          {/* CTA interno */}
-          <a
-            href="#contato"
-            onClick={(e) => { e.preventDefault(); document.querySelector('#contato')?.scrollIntoView({ behavior: 'smooth' }) }}
-            className="inline-flex items-center gap-3 text-sm font-semibold text-brand-navy
-                       uppercase tracking-widest group"
-          >
-            <span>Fale com nossos especialistas</span>
-            <span className="inline-block w-8 h-px bg-brand-navy group-hover:w-16
-                             group-hover:bg-brand-orange transition-all duration-500" />
-          </a>
-        </div>
-
-        {/* ── Coluna visual ─────────────────────────────────────────────── */}
-        <div className="relative">
-          {/* Acento laranja vertical */}
-          <div
-            ref={accentRef}
-            className="absolute -left-6 top-12 bottom-12 w-1 bg-brand-orange rounded-full"
-          />
-
-          {/*
-            ──────────────────────────────────────────────────────────────
-            IMAGEM SOBRE A EMPRESA
-            ➤ Substitua o bloco abaixo pela imagem real:
-               <img
-                 src="/images/sobre-ar3.jpg"
-                 alt="Equipe AR3 Construtora"
-                 className="w-full h-full object-cover"
-               />
-            ➤ Sugestão: foto da equipe, escritório ou de uma obra
-               em andamento de alto padrão.
-            ──────────────────────────────────────────────────────────────
-          */}
-          <div
-            ref={imageRef}
-            className="relative overflow-hidden rounded-sm shadow-2xl"
-            style={{ height: 'clamp(400px, 50vw, 620px)' }}
-          >
-            {/* Placeholder visual até inserir a imagem real */}
-            <div className="absolute inset-0 bg-gradient-to-br from-brand-blue via-brand-sky to-brand-navy
-                            flex flex-col items-center justify-center">
-              <p className="text-white/30 text-xs uppercase tracking-widest text-center px-8">
-                {/* ↓ Texto guia – remova ao inserir a imagem */}
-                Insira aqui uma foto da equipe AR3<br />ou de uma obra de destaque
+            {/* Texto */}
+            <div ref={textRef} className="space-y-5 mb-14">
+              <p className="text-brand-navy/55 text-[15px] leading-[1.9] font-sans font-light">
+                A AR3 Construtora nasceu da visão de profissionais que acreditam que uma obra
+                bem feita vai além de paredes e lajes — ela representa o futuro de famílias
+                e negócios. Com sede em Uberaba/MG, atuamos em todo o Triângulo Mineiro.
+              </p>
+              <p className="text-brand-navy/55 text-[15px] leading-[1.9] font-sans font-light">
+                Nossa abordagem une rigor técnico, estética refinada e gestão transparente.
+                Cada projeto recebe atenção personalizada, do primeiro croqui às chaves entregues.
               </p>
             </div>
 
-            {/* Overlay gradiente decorativo */}
-            <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/60 via-transparent to-transparent" />
+            {/* Pilares */}
+            <div className="space-y-6">
+              {PILLARS.map((p, i) => (
+                <div key={p.title}
+                     ref={(el) => (pillarsRef.current[i] = el)}
+                     className="flex gap-5 group">
+                  <div className="shrink-0 w-10 h-10 border border-brand-navy/15 flex items-center justify-center
+                                  group-hover:border-brand-orange group-hover:bg-brand-orange/5
+                                  transition-all duration-400">
+                    <p.Icon size={16} className="text-brand-navy/40 group-hover:text-brand-orange transition-colors duration-300" />
+                  </div>
+                  <div>
+                    <h4 className="text-brand-navy font-sans font-semibold text-sm uppercase tracking-[0.12em] mb-1.5">
+                      {p.title}
+                    </h4>
+                    <p className="text-brand-navy/45 text-[13px] leading-[1.8] font-sans font-light">
+                      {p.text}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
 
-            {/* Badge sobre a imagem */}
-            <div className="absolute bottom-6 left-6 right-6">
-              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-sm p-4">
-                <p className="text-white text-sm font-semibold">AR3 Construtora</p>
-                <p className="text-white/60 text-xs mt-1">Uberaba – MG | Desde 2009</p>
+          {/* ── Coluna direita – imagem ───────────────────────────────── */}
+          <div ref={imgRef} className="relative">
+            {/* Moldura decorativa deslocada */}
+            <div className="absolute -top-4 -right-4 w-full h-full border border-brand-gold/20 z-0" />
+
+            {/* Bloco da imagem */}
+            <div className="relative z-10 aspect-[4/5] bg-brand-navy/8 overflow-hidden">
+              {/*
+                ↓ SUBSTITUA pelo src real:
+                   <img src="/images/equipe-ar3.jpg" alt="Equipe AR3 Construtora"
+                        className="w-full h-full object-cover" />
+              */}
+              <div className="w-full h-full flex items-center justify-center
+                              bg-gradient-to-br from-brand-navy/10 to-brand-navy/30">
+                <div className="text-center px-8">
+                  <div className="w-16 h-16 border border-brand-navy/20 flex items-center justify-center mx-auto mb-4">
+                    <span className="font-display font-black text-brand-navy/20 text-xl">AR3</span>
+                  </div>
+                  <p className="text-brand-navy/25 text-xs font-sans uppercase tracking-[0.2em]">
+                    Foto da equipe AR3
+                  </p>
+                  {/* ↑ Insira aqui uma foto da equipe AR3 Construtora */}
+                </div>
               </div>
             </div>
-          </div>
 
-          {/*
-            ── CARD FLUTUANTE com uma mini-foto secundária ───────────────
-            ➤ Substitua o placeholder abaixo por uma imagem de detalhe
-               construtivo (acabamento, estrutura, etc.):
-               <img src="/images/detalhe-construtivo.jpg" ... />
-          */}
-          <div className="absolute -bottom-8 -right-6 w-48 h-32 rounded-sm shadow-xl overflow-hidden
-                          border-4 border-white">
-            <div className="w-full h-full bg-brand-orange/80 flex items-center justify-center">
-              <p className="text-white text-[10px] text-center uppercase tracking-widest px-3">
-                {/* ↓ Mini-foto de detalhe construtivo */}
-                Foto detalhe<br />construtivo
+            {/* Badge flutuante */}
+            <div className="absolute -bottom-6 -left-6 bg-brand-navy px-6 py-4 z-20">
+              <p className="text-[10px] text-brand-gold/70 uppercase tracking-[0.25em] font-sans mb-1">
+                Fundada em
               </p>
+              <p className="font-display font-black text-white text-3xl leading-none">2009</p>
             </div>
           </div>
+
         </div>
       </div>
     </section>

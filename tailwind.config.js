@@ -10,22 +10,28 @@ export default {
         // ── AR3 Brand Palette ──────────────────────────────────────
         brand: {
           // Blues
-          'navy':      '#0A1628',   // Deep navy – hero bg, footer
-          'blue':      '#1B3B6F',   // Mid-blue – section bg
-          'sky':       '#1D6FA4',   // Accent blue – buttons, borders
+          'navy':      '#080F1C',   // Deep navy ultra-rico
+          'blue':      '#0E2140',   // Mid-blue – section bg
+          'sky':       '#1A5F8F',   // Accent blue – buttons, borders
           // Oranges
-          'orange':    '#F26522',   // Primary orange – CTAs, highlights
-          'amber':     '#FF8C42',   // Light orange – hover states
+          'orange':    '#E85D1A',   // Primary orange – CTAs (saturado)
+          'amber':     '#F97316',   // Light orange – hover
+          // Gold – acento de luxo
+          'gold':      '#C9A84C',   // Dourado premium
+          'goldLight': '#E8C878',   // Dourado claro
           // Neutrals
           'white':     '#FFFFFF',
-          'offwhite':  '#F5F5F0',   // Section backgrounds
-          'gray':      '#E8E8E4',   // Dividers
-          'dark':      '#111111',   // Body text
+          'offwhite':  '#F7F6F2',   // Fundo claro quente
+          'cream':     '#EDE9DF',   // Creme
+          'gray':      '#D6D3CC',   // Divisores
+          'muted':     '#8A8680',   // Texto secundário
+          'dark':      '#0D0D0D',   // Body text
         },
       },
       fontFamily: {
         sans:    ['Inter', 'sans-serif'],
         display: ['Playfair Display', 'serif'],
+        mono:    ['JetBrains Mono', 'monospace'],
       },
       fontSize: {
         'fluid-hero': 'clamp(2.5rem, 7vw, 7rem)',
