@@ -12,6 +12,7 @@
 
   html {
     scroll-behavior: smooth;
+    scroll-snap-type: y proximity;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -107,4 +108,14 @@
 ::selection {
   background-color: #F26522;
   color: #ffffff;
+}
+
+/* ── Scroll snap nas sections ───────────────────────────────────────── */
+#hero,
+#sobre,
+#projetos,
+#servicos,
+#diferenciais,
+#contato {
+  scroll-snap-align: start;
 }
