@@ -238,7 +238,7 @@ export default function Projects() {
             {PROJECTS.map((proj) => (
               <div key={proj.num}
                    className="group relative shrink-0 overflow-hidden cursor-pointer"
-                   style={{ width: '36vw' }}
+                   style={{ width: 'clamp(260px, 78vw, 36vw)' }}
                    onClick={() => openLightbox(proj)}>
 
                 {/* Fundo / Imagem de capa */}
