@@ -5,7 +5,7 @@ import { ArrowDown } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const ROTATING_WORDS = ['Residencias', 'Edificios', 'Patrimonios', 'Legados']
+const ROTATING_WORDS = ['Residências', 'Edifícios', 'Patrimônios', 'Legados']
 
 export default function Hero() {
   const sectionRef  = useRef(null)
@@ -117,7 +117,7 @@ export default function Hero() {
       <div ref={yearRef}
            className="absolute right-8 top-1/2 -translate-y-1/2 lg:flex flex-col items-center gap-6 hidden pointer-events-none">
         <span className="text-[9px] text-white/25 uppercase tracking-[0.35em] font-sans [writing-mode:vertical-lr] rotate-180">
-          Est. 2009 - Uberaba - MG
+          Est. 2009 · Uberaba · MG
         </span>
         <div className="w-px h-16 bg-gradient-to-b from-brand-gold/30 to-transparent" />
       </div>
@@ -129,11 +129,11 @@ export default function Hero() {
         <div ref={tagRef} className="flex items-center gap-4 mb-10">
           <div className="w-8 h-px bg-brand-gold" />
           <span className="text-[10px] font-sans font-medium text-brand-gold/80 uppercase tracking-[0.35em]">
-            Uberaba - Minas Gerais
+            Uberaba — Minas Gerais
           </span>
           <div className="w-1.5 h-1.5 bg-brand-orange rounded-full" />
           <span className="text-[10px] font-sans font-light text-white/30 uppercase tracking-[0.25em]">
-            Construcao de Alto Padrao
+            Construção de Alto Padrão
           </span>
         </div>
 
@@ -141,7 +141,7 @@ export default function Hero() {
         <div ref={line1Ref}
              className="overflow-hidden mb-3 flex flex-wrap"
              style={{ lineHeight: 1 }}>
-          {['Nos', 'Construimos'].map((w, i) => (
+          {['Nós', 'Construímos'].map((w, i) => (
             <span key={i}
                   className="wd inline-block mr-[0.22em] font-display font-black text-white"
                   style={{ fontSize: 'clamp(3.5rem, 9.5vw, 9rem)' }}>
@@ -171,9 +171,9 @@ export default function Hero() {
         {/* Subtitulo */}
         <p ref={subRef}
            className="max-w-lg text-[15px] text-white/50 leading-[1.85] font-sans font-light tracking-wide mb-14">
-          Dedicacao, experiencia e uma paixao inabalavel pela perfeicao.
+          Dedicação, experiência e uma paixão inabalável pela perfeição.
           Mais de 15 anos transformando projetos em obras que resistem ao tempo
-          no Triangulo Mineiro e alem.
+          no Triângulo Mineiro e além.
         </p>
 
         {/* CTAs */}
@@ -188,7 +188,7 @@ export default function Hero() {
           <a href="#sobre"
              onClick={(e) => { e.preventDefault(); document.querySelector('#sobre')?.scrollIntoView({ behavior: 'smooth' }) }}
              className="group inline-flex items-center gap-3 text-[11px] font-sans font-medium text-white/50 uppercase tracking-[0.2em] hover:text-white transition-colors duration-300">
-            Conheca a AR3
+            Conheça a AR3
             <span className="inline-block w-8 h-px bg-current group-hover:w-14 transition-all duration-500" />
           </a>
         </div>
@@ -198,7 +198,7 @@ export default function Hero() {
           {[
             { v: '15+',  l: 'Anos'              },
             { v: '200+', l: 'Obras entregues'   },
-            { v: '98%',  l: 'Satisfacao'         },
+            { v: '98%',  l: 'Satisfação'         },
           ].map(({ v, l }) => (
             <div key={l} className="flex items-baseline gap-2">
               <span className="font-display font-black text-white text-2xl">{v}</span>
