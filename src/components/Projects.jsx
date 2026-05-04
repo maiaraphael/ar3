@@ -22,16 +22,16 @@ const PROJECTS = [
   },
   {
     num: '02',
-    title: 'Edifício Corporativo Central',
-    category: 'Comercial · Escritórios',
+    title: 'Residência Dhama I',
+    category: 'Residencial · Alto Padrão',
     location: 'Uberaba, MG',
-    area: '4.200 m²',
-    year: '2023',
+    area: '320 m²',
+    year: '2025',
     gradient: 'from-[#1e3a2f] to-[#2d5a44]',
     // ↓ URL da foto de capa
-    cover: null,
+    cover: '/images/casa02/foto_01.png',
     // ↓ URLs das fotos do projeto
-    gallery: [],
+    gallery: ['/images/casa02/foto_02.png'],
   },
   {
     num: '03',
