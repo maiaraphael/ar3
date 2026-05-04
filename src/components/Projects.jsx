@@ -29,9 +29,9 @@ const PROJECTS = [
     year: '2025',
     gradient: 'from-[#1e3a2f] to-[#2d5a44]',
     // ↓ URL da foto de capa
-    cover: '/images/casa02/foto_01.png',
+    cover: '/images/casa02/foto01.png',
     // ↓ URLs das fotos do projeto
-    gallery: ['/images/casa02/foto_02.png'],
+    gallery: ['/images/casa02/foto02.jpeg'],
   },
   {
     num: '03',
@@ -406,7 +406,7 @@ export default function Projects() {
                 <button
                   key={i}
                   onClick={() => setLightbox(prev => ({ ...prev, photoIndex: i }))}
-                  className={`w-14 h-14 overflow-hidden border-2 transition-colors duration-200 shrink-0
+                  className={`w-20 h-20 sm:w-14 sm:h-14 overflow-hidden border-2 transition-colors duration-200 shrink-0
                               ${ i === lightbox.photoIndex
                                   ? 'border-brand-gold'
                                   : 'border-white/10 hover:border-white/40' }`}>
