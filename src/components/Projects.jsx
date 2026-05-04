@@ -8,17 +8,17 @@ gsap.registerPlugin(ScrollTrigger)
 const PROJECTS = [
   {
     num: '01',
-    title: 'Residência Alto do Mirante',
+    title: 'Residência Dhama III',
     category: 'Residencial · Alto Padrão',
     location: 'Uberaba, MG',
-    area: '680 m²',
-    year: '2023',
+    area: '340 m²',
+    year: '2025',
     gradient: 'from-[#1a2540] to-[#2d4a7a]',
     // ↓ URL da foto de capa do cartão (aparece no scroll)
-    cover: null,
+    cover: '/images/casa01/foto_01.png',
     // ↓ URLs das fotos do projeto (aparecem no lightbox ao clicar)
     //   Adicione quantas quiser, ex: ['/images/proj-01-a.jpg', '/images/proj-01-b.jpg']
-    gallery: [],
+    gallery: ['/images/casa01/foto_01.png', '/images/casa01/foto_02.png'],
   },
   {
     num: '02',
